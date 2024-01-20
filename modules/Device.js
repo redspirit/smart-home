@@ -34,6 +34,10 @@ class Device {
             _.isString(value) ? value : JSON.stringify(value)
         );
     }
+
+    set(value) {
+        this.publish('set', value);
+    }
 }
 
 module.exports = Device;
