@@ -10,7 +10,7 @@ lobbyMotion.on(async (data) => {
     let isNight = hour > 22 || hour < 7;
     let brightness = isNight ? 40 : 254;
 
-    console.log({isNight, brightness});
+    console.log({hour, isNight, brightness});
 
     let state = data.occupancy ? 'ON' : 'OFF';
     ledDriver.set({
