@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/redspirit/smart-home#readme",
   "dependencies": {
+    "console-stamp": "^3.1.2",
     "cron": "^3.1.6",
     "moment": "^2.30.1",
     "mqtt": "^5.3.4",

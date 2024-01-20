@@ -1,6 +1,6 @@
 const _ = require('underscore');
 const config = require('../config.json').mqtt;
-const MQTTClient = require('./modules/mqtt')
+const MQTTClient = require('./mqtt')
 
 class Device {
     constructor(name) {

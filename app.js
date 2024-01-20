@@ -1,4 +1,6 @@
 
+require('console-stamp')(console, { format: ':date(dd/mm/yyyy HH:MM:ss) :label' });
+const config = require('./config.json').mqtt;
 const MQTTClient = require('./modules/mqtt')
 
 MQTTClient.on('connect', () => {
