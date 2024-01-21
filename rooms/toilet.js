@@ -1,5 +1,5 @@
 
-const utils = require('../modules/utils');
+const {onOff, sleep} = require('../modules/utils');
 const Device = require('../modules/Device');
 
 const motion = new Device('motion_toilet');
@@ -11,8 +11,7 @@ let holdLight = false; // удерживание света игнорируя �
 // датчик движения
 motion.on(async (data) => {
     if (holdLight) return false;
-    let value = data.occupancy ? 'ON' : 'OFF';
-    light.set(value);
+    light.set(onOff(data.occupancy));
 });
 
 // кнопка
@@ -20,9 +19,9 @@ btn.on(async (data) => {
     holdLight = !holdLight;
     if (holdLight) {
         light.set('ON');
-        await utils.sleep('15m'); // ждем N минут и отключаем свет
+        await sleep('15m'); // ждем N минут и отключаем свет
         holdLight = false;
-        light.set('OFF');
+        light.set(onOff(motion.data.occupancy));
     } else {
         light.set('OFF');
     }
