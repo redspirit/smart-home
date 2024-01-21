@@ -13,6 +13,7 @@ MQTTClient.on('connect', () => {
     // attach each room
     require('./rooms/lobby');
     require('./rooms/toilet');
+    require('./rooms/bath');
 });
 
 console.log('Smart home started');
