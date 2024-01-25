@@ -1,16 +1,18 @@
 
-const {onOff, sleep} = require('../modules/utils');
+const {onOff} = require('../modules/utils');
 const Device = require('../modules/Device');
+const Timer = require('../modules/Timer');
 
 const motion = new Device('motion_bath');
 const light = new Device('switch_bath');
 const btn = new Device('btn_bath');
 
-let hold = false;
+let timerShort = new Timer('8s');
+let timerLong = new Timer('30m');
 
 // датчик движения
 motion.on(async (data) => {
-    if (hold) return false;
+    if (timerLong.isWaiting || timerShort.isWaiting) return false;
     light.set(onOff(data.occupancy));
 });
 
@@ -18,13 +20,15 @@ motion.on(async (data) => {
 btn.on(async () => {
     if(light.data.state === 'ON') {
         light.set('OFF');
-        hold = true;
-        await sleep('8s');
-        hold = false;
+        timerLong.stop();
+        timerShort.start();
     } else {
         light.set('ON');
-        hold = true;
-        await sleep('30m');
-        hold = false;
+        timerShort.stop();
+        timerLong.start();
     }
+});
+
+timerLong.onEnd(() => {
+    light.set(onOff(motion.data.occupancy));
 });
