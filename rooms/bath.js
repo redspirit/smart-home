@@ -15,11 +15,11 @@ motion.on(async (data) => {
 });
 
 // кнопка
-btn.on(async (data) => {
+btn.on(async () => {
     if(light.data.state === 'ON') {
         light.set('OFF');
         hold = true;
-        await sleep('5s');
+        await sleep('8s');
         hold = false;
     } else {
         light.set('ON');
