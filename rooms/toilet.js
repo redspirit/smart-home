@@ -21,7 +21,7 @@ motion.on(async (data) => {
 // кнопка
 btn.on(async (data) => {
     if(data.action === 'single') {
-        if(light.data.state === 'ON') {
+        if(light.data && light.data.state === 'ON') {
             light.set('OFF');
             timerLong.stop();
             timerShort.start();
