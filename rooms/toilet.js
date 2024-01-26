@@ -19,15 +19,17 @@ motion.on(async (data) => {
 
 
 // кнопка
-btn.on(async () => {
-    if(light.data.state === 'ON') {
-        light.set('OFF');
-        timerLong.stop();
-        timerShort.start();
-    } else {
-        light.set('ON');
-        timerShort.stop();
-        timerLong.start();
+btn.on(async (data) => {
+    if(data.action === 'single') {
+        if(light.data.state === 'ON') {
+            light.set('OFF');
+            timerLong.stop();
+            timerShort.start();
+        } else {
+            light.set('ON');
+            timerShort.stop();
+            timerLong.start();
+        }
     }
 });
 
