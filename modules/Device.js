@@ -12,13 +12,16 @@ class Device {
 
         MQTTClient.on('message', (topic, message) => {
             // message is Buffer
-            let data = JSON.parse(message.toString());
-            // topic = topic.replace(`${config.root}/`, '');
-
-            if(topic.startsWith(`${config.root}/${this.name}`)) {
-                this.topic = topic;
-                this.data = data;
-                this.onFunc(data).then();
+            let msg = message.toString();
+            try {
+                let data = JSON.parse(msg);
+                if(topic.startsWith(`${config.root}/${this.name}`)) {
+                    this.topic = topic;
+                    this.data = data;
+                    this.onFunc(data).then();
+                }
+            } catch (err) {
+                console.error('[Device]', topic, msg, err.toString());
             }
         });
 
