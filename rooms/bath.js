@@ -7,27 +7,32 @@ const motion = new Device('motion_bath');
 const light = new Device('switch_bath');
 const btn = new Device('btn_bath');
 
+btn.registerEvent('single', (data) => {
+    return {
+        condition: data.action === 'single',
+        value: null
+    };
+});
+
 let timerShort = new Timer('8s');
 let timerLong = new Timer('30m');
 
 // датчик движения
-motion.on(async (data) => {
+motion.onMessage((data) => {
     if (timerLong.isWaiting || timerShort.isWaiting) return false;
     light.set(onOff(data.occupancy));
 });
 
 // кнопка
-btn.on(async (data) => {
-    if(data.action === 'single') {
-        if(light.data && light.data.state === 'ON') {
-            light.set('OFF');
-            timerLong.stop();
-            timerShort.start();
-        } else {
-            light.set('ON');
-            timerShort.stop();
-            timerLong.start();
-        }
+btn.on('single', () => {
+    if(light.data && light.data.state === 'ON') {
+        light.set('OFF');
+        timerLong.stop();
+        timerShort.start();
+    } else {
+        light.set('ON');
+        timerShort.stop();
+        timerLong.start();
     }
 });
 

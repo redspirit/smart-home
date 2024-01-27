@@ -1,14 +1,18 @@
 const _ = require('underscore');
+const EventEmitter = require('events');
 const config = require('../config.json').mqtt;
 const MQTTClient = require('./mqtt')
+const {isAsyncFunc} = require('utils')
+
+const eventEmitter = new EventEmitter();
 
 class Device {
     constructor(name) {
         this.name = name;
         this.data = null;
-        this.topic = null;
-        this.client = null;
-        this.onFunc = async () => {};
+        this.onFunc = () => {};
+        this.events = [];
+        this.on = eventEmitter.on;
 
         MQTTClient.on('message', (topic, message) => {
             // message is Buffer
@@ -16,9 +20,22 @@ class Device {
             try {
                 let data = JSON.parse(msg);
                 if(topic.startsWith(`${config.root}/${this.name}`)) {
-                    this.topic = topic;
                     this.data = data;
-                    this.onFunc(data).then();
+                    if(this.onFunc) {
+                        if(isAsyncFunc(this.onFunc)) {
+                            this.onFunc(data).then();
+                        } else {
+                            this.onFunc(data);
+                        }
+                    }
+
+                    _.each(this.events, e => {
+                        if(!e.filterFn) return false;
+                        let {condition, value} = e.filterFn(data);
+                        if(condition) {
+                            eventEmitter.emit(e.name, value || null);
+                        }
+                    });
                 }
             } catch (err) {
                 console.error('[Device]', topic, msg, err.toString());
@@ -27,7 +44,14 @@ class Device {
 
     }
 
-    on(fn) {
+    registerEvent(name, filterFn) {
+        this.events.push({
+            name,
+            filterFn
+        })
+    }
+
+    onMessage(fn) {
         this.onFunc = fn;
     }
 
