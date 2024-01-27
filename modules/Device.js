@@ -4,15 +4,13 @@ const config = require('../config.json').mqtt;
 const MQTTClient = require('./mqtt')
 const {isAsyncFunc} = require('../modules/utils')
 
-const eventEmitter = new EventEmitter();
-
 class Device {
     constructor(name) {
+        this.ee = new EventEmitter();
         this.name = name;
         this.data = null;
         this.onFunc = () => {};
         this.events = [];
-        this.on = eventEmitter.on;
 
         MQTTClient.on('message', (topic, message) => {
             // message is Buffer
@@ -33,7 +31,7 @@ class Device {
                         if(!e.filterFn) return false;
                         let {condition, value} = e.filterFn(data);
                         if(condition) {
-                            eventEmitter.emit(e.name, value || null);
+                            this.ee.emit(e.name, value || null);
                         }
                     });
                 }
@@ -49,6 +47,10 @@ class Device {
             name,
             filterFn
         })
+    }
+
+    on(name, fn) {
+        return this.ee.on(name, fn);
     }
 
     onMessage(fn) {
