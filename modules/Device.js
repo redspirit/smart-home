@@ -2,7 +2,7 @@ const _ = require('underscore');
 const EventEmitter = require('events');
 const config = require('../config.json').mqtt;
 const MQTTClient = require('./mqtt')
-const {isAsyncFunc} = require('utils')
+const {isAsyncFunc} = require('../modules/utils')
 
 const eventEmitter = new EventEmitter();
 
