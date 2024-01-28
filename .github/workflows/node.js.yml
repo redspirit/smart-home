@@ -5,13 +5,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  lint:
 
     runs-on: self-hosted
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
     - uses: actions/checkout@v3
@@ -21,4 +21,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm start
+    - run: npm lint
+
+  build:
+    runs-on: self-hosted
+    needs: lint
+
+    steps:
+      - uses: 'docker'
+      - run: docker build . -t ${{ github.event.repository.name }}
