@@ -18,7 +18,7 @@ MQTTClient.on('connect', () => {
 });
 
 
-server.post('/commands', require('./routes/commands'));
+server.use('/commands', require('./routes/commands'));
 
 server.use((req, res) => {
     console.warn('Request not found', req.url)
@@ -31,6 +31,6 @@ server.use((err, req, res, next) => {
 });
 
 server.listen(config.server.port, () => {
-    console.log('Smart home started');
+    console.log('Smart home started on', config.server.port);
 })
 
