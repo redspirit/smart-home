@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/redspirit/smart-home#readme",
   "dependencies": {
+    "axios": "^1.7.7",
     "console-stamp": "^3.1.2",
     "cron": "^3.1.6",
+    "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
     "moment": "^2.30.1",
     "mqtt": "^5.3.4",
     "ms": "^2.1.3",

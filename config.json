@@ -2,5 +2,13 @@
   "mqtt": {
     "url": "mqtt://localhost:1883",
     "root": "zigbee2mqtt"
+  },
+  "server": {
+    "port": 3001
+  },
+  "keenetic": {
+    "routerHost": "192.168.1.1:8881",
+    "deviceMac": "a8:96:09:bc:a9:3e",
+    "vpnPolicy": "Policy1"
   }
 }
