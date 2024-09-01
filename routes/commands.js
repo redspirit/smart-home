@@ -10,18 +10,18 @@ router.post('/:action', async (req, res) => {
     if(action === 'vpn-on') {
         await keeneticApi.vpnEnable().then(() => {
             console.log('VPN включен!');
-            res.send('VPN включен!');
+            res.send({title: 'VPN включен!'});
         }, (err) => {
             console.log('vpnEnable', err.toString());
-            res.send('VPN уже включен');
+            res.send({title:'VPN уже включен'});
         });
     } else if(action === 'vpn-off') {
         await keeneticApi.vpnDisable().then(() => {
             console.log('VPN выключен!');
-            res.send('VPN выключен!');
+            res.send({title: 'VPN выключен!'});
         }, (err) => {
             console.log('vpnDisable', err.toString());
-            res.send('VPN уже выключен');
+            res.send({title:'VPN уже выключен'});
         });
     } else {
         res.send({
