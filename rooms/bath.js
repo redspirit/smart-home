@@ -7,9 +7,17 @@ const motion = new Device('motion_bath');
 const light = new Device('switch_bath');
 const btn = new Device('btn_bath');
 
+// single | double | hold
 btn.registerEvent('single', (data) => {
     return {
         condition: data.action === 'single',
+        value: null
+    };
+});
+
+btn.registerEvent('double', (data) => {
+    return {
+        condition: data.action === 'double',
         value: null
     };
 });
@@ -23,7 +31,7 @@ motion.onMessage((data) => {
     light.set(onOff(data.occupancy));
 });
 
-// кнопка
+// кнопка обычное нажатие
 btn.on('single', () => {
     if(light.data && light.data.state === 'ON') {
         light.set('OFF');
@@ -33,6 +41,15 @@ btn.on('single', () => {
         light.set('ON');
         timerShort.stop();
         timerLong.start();
+    }
+});
+
+// кнопка быстрое двойное нажатие
+btn.on('double', () => {
+    if(light.data && light.data.state === 'ON') {
+        light.set('OFF'); // отключает свет на 30 мин
+        timerLong.start();
+        timerShort.stop();
     }
 });
 
