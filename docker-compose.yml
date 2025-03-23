@@ -12,7 +12,6 @@ services:
       - ./mosquitto/log:/mosquitto/log
     ports:
       - 1883:1883
-      #- 9001:9001
     environment:
       - MQTT_BROKER_URL=mqtt://mosquitto
 
