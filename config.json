@@ -1,6 +1,6 @@
 {
   "mqtt": {
-    "url": "mqtt://localhost:1883",
+    "url": "mqtt://192.168.1.48:1883",
     "root": "zigbee2mqtt"
   },
   "server": {
