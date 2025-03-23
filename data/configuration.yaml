@@ -1,0 +1,69 @@
+homeassistant:
+  enabled: false
+frontend:
+  enabled: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://mosquitto
+serial:
+  adapter: ezsp
+  port: /dev/ttyACM0
+advanced:
+  network_key:
+    - 123
+    - 4
+    - 98
+    - 34
+    - 114
+    - 122
+    - 93
+    - 38
+    - 71
+    - 157
+    - 227
+    - 230
+    - 77
+    - 101
+    - 53
+    - 134
+  pan_id: 6920
+  ext_pan_id:
+    - 248
+    - 65
+    - 59
+    - 151
+    - 75
+    - 255
+    - 78
+    - 30
+  log_level: debug
+device_options: {}
+devices:
+  '0x9035eafffe2f0866':
+    friendly_name: btn_test_2
+  '0xa4c138a187561bf9':
+    friendly_name: lobby_motion
+  '0xa4c138c211b1d9ea':
+    friendly_name: mirror_light
+  '0xa4c138157bb22c3e':
+    friendly_name: motion_toilet
+  '0x50325ffffe9c465a':
+    friendly_name: motion_bath
+    occupancy_timeout: 90
+  '0xa4c13808b5e58bdc':
+    friendly_name: rgb_driver_1
+  '0xa4c13827d7991482':
+    friendly_name: switch_toilet
+  '0xa4c138cc5d603527':
+    friendly_name: lobby_led_driver
+  '0xa4c13829b1d0436b':
+    friendly_name: switch_bath
+  '0xa4c138cb7c2e024c':
+    friendly_name: btn_bath
+  '0x9035eafffe418a99':
+    friendly_name: btn_test
+  '0xa4c1387071e38067':
+    friendly_name: btn_toilet
+  '0xa4c13811623bb6ad':
+    friendly_name: '0xa4c13811623bb6ad'
+version: 4

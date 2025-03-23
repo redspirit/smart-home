@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: always
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
+      #- 9001:9001
+    environment:
+      - MQTT_BROKER_URL=mqtt://mosquitto
+
+  zigbee2mqtt:
+      container_name: zigbee2mqtt
+      image: ghcr.io/koenkk/zigbee2mqtt
+      restart: unless-stopped
+      volumes:
+          - ./data:/app/data
+          - /run/udev:/run/udev:ro
+      ports:
+          # Frontend port
+          - 8080:8080
+      environment:
+          - TZ=Europe/Moscow
+      devices:
+          # Адаптер подключенный к Orange Pi
+          - /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231009135539-if00:/dev/ttyACM0
