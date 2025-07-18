@@ -12,6 +12,9 @@ services:
       - ./mosquitto/log:/mosquitto/log
     ports:
       - 1883:1883
+    logging:
+      options:
+        max-size: 50m
     environment:
       - MQTT_BROKER_URL=mqtt://mosquitto
 
@@ -27,6 +30,9 @@ services:
           - 8080:8080
       environment:
           - TZ=Europe/Moscow
+      logging:
+        options:
+          max-size: 50m
       devices:
           # Адаптер подключенный к Orange Pi
           - /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231009135539-if00:/dev/ttyACM0
