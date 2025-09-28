@@ -36,7 +36,7 @@ advanced:
     - 255
     - 78
     - 30
-  log_level: debug
+  log_level: info
 device_options: {}
 devices:
   '0x9035eafffe2f0866':
