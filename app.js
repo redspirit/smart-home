@@ -15,6 +15,7 @@ MQTTClient.on('connect', () => {
     require('./rooms/lobby');
     require('./rooms/toilet');
     require('./rooms/bath');
+    require('./rooms/flowers');
 });
 
 
