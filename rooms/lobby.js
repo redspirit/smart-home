@@ -2,7 +2,7 @@
 const moment = require('moment');
 const Device = require('../modules/Device');
 
-const lobbyMotion = new Device('lobby_motion');
+const lobbyMotion = new Device('lobby_motion_2');
 const ledDriver = new Device('lobby_led_driver');
 
 lobbyMotion.onMessage((data) => {
