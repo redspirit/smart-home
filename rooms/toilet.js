@@ -18,14 +18,12 @@ let timerLong = new Timer('15m');
 
 // датчик движения
 motion.onMessage((data) => {
-    console.log('Bath motion', data.occupancy, timerLong.isWaiting, timerShort.isWaiting);
     if (timerLong.isWaiting || timerShort.isWaiting) return false;
     light.set(onOff(data.occupancy));
 });
 
 // кнопка
 btn.on('single', () => {
-    console.log('BTN Toilet single!');
     if (light.data && light.data.state === 'ON') {
         light.set('OFF');
         timerLong.stop();
