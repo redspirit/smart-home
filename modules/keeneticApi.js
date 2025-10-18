@@ -8,18 +8,18 @@ const client = axios.create({
 const vpnEnable = () => {
     return client.post('/ip/hotspot/host', {
         mac: config.deviceMac,
-        policy: config.vpnPolicy
+        policy: config.vpnPolicy,
     });
-}
+};
 
 const vpnDisable = () => {
     return client.post('/ip/hotspot/host', {
         mac: config.deviceMac,
-        policy: false
+        policy: false,
     });
-}
+};
 
 module.exports = {
     vpnEnable,
     vpnDisable,
-}
+};

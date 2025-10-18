@@ -4,39 +4,45 @@ class Timer {
     #timer;
     #ms;
     #fn;
-    #starFn;
+    #startFn;
 
     constructor(val) {
         this.#timer = null;
         this.#ms = ms(val);
         this.#fn = () => {};
-        this.#starFn = () => {};
+        this.#startFn = () => {};
         this.isWaiting = false;
     }
     onEnd(fn) {
         this.#fn = fn;
     }
     onStart(fn) {
-        this.#starFn = fn;
+        this.#startFn = fn;
     }
-    start() {
-        if(this.isWaiting) return false;
+    start(force = false) {
+        // Если таймер уже запущен
+        if (this.isWaiting) {
+            if (!force) return false;
+            this.stop();
+        }
         this.isWaiting = true;
         this.#timer = setTimeout(() => {
             this.isWaiting = false;
             this.#fn();
         }, this.#ms);
-        this.#starFn();
+
+        this.#startFn();
+        return true;
     }
     stop() {
         this.isWaiting = false;
-        if(this.#timer) {
+        if (this.#timer) {
             clearTimeout(this.#timer);
         }
     }
     end() {
         this.stop();
-        if(this.#fn) this.#fn();
+        if (this.#fn) this.#fn();
     }
 }
 

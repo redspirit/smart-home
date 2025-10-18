@@ -1,5 +1,4 @@
-
-const {onOff} = require('../modules/utils');
+const { onOff } = require('../modules/utils');
 const Device = require('../modules/Device');
 const Timer = require('../modules/Timer');
 
@@ -11,14 +10,14 @@ const btn = new Device('btn_bath');
 btn.registerEvent('single', (data) => {
     return {
         condition: data.action === 'single',
-        value: null
+        value: null,
     };
 });
 
 btn.registerEvent('double', (data) => {
     return {
         condition: data.action === 'double',
-        value: null
+        value: null,
     };
 });
 
@@ -33,7 +32,7 @@ motion.onMessage((data) => {
 
 // кнопка обычное нажатие
 btn.on('single', () => {
-    if(light.data && light.data.state === 'ON') {
+    if (light.data && light.data.state === 'ON') {
         light.set('OFF');
         timerLong.stop();
         timerShort.start();
@@ -46,7 +45,7 @@ btn.on('single', () => {
 
 // кнопка быстрое двойное нажатие
 btn.on('double', () => {
-    if(light.data && light.data.state === 'ON') {
+    if (light.data && light.data.state === 'ON') {
         light.set('OFF'); // отключает свет на 30 мин
         timerLong.start();
         timerShort.stop();

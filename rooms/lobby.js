@@ -1,18 +1,35 @@
-
 const moment = require('moment');
 const Device = require('../modules/Device');
+const Timer = require('../modules/Timer');
 
 const lobbyMotion = new Device('lobby_motion_2');
+const lobbyMotionOld = new Device('lobby_old_motion');
 const ledDriver = new Device('lobby_led_driver');
 
-lobbyMotion.onMessage((data) => {
+let lightTimer = new Timer('30s'); // сколько горит свет при любой активности
+
+let getBrightness = () => {
     let hour = moment().hours();
     let isNight = hour > 19 || hour < 7;
-    let brightness = isNight ? 30 : 254;
+    return isNight ? 30 : 254;
+};
 
-    let state = data.occupancy ? 'ON' : 'OFF';
+const onFire = (data) => {
+    if (data.occupancy) {
+        ledDriver.set({
+            state: 'ON',
+            brightness: getBrightness(),
+        });
+        lightTimer.start(true);
+    }
+};
+
+lightTimer.onEnd(() => {
     ledDriver.set({
-        state,
-        brightness
+        state: 'OFF',
+        brightness: getBrightness(),
     });
 });
+
+lobbyMotion.onMessage(onFire);
+lobbyMotionOld.onMessage(onFire);

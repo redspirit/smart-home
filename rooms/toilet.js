@@ -1,5 +1,4 @@
-
-const {onOff} = require('../modules/utils');
+const { onOff } = require('../modules/utils');
 const Device = require('../modules/Device');
 const Timer = require('../modules/Timer');
 
@@ -10,7 +9,7 @@ const btn = new Device('btn_toilet');
 btn.registerEvent('single', (data) => {
     return {
         condition: data.action === 'single',
-        value: null
+        value: null,
     };
 });
 
@@ -27,7 +26,7 @@ motion.onMessage((data) => {
 // кнопка
 btn.on('single', () => {
     console.log('BTN Toilet single!');
-    if(light.data && light.data.state === 'ON') {
+    if (light.data && light.data.state === 'ON') {
         light.set('OFF');
         timerLong.stop();
         timerShort.start();
