@@ -36,13 +36,13 @@ advanced:
     - 255
     - 78
     - 30
-  log_level: info
+  log_level: error
 device_options: {}
 devices:
   '0x9035eafffe2f0866':
     friendly_name: btn_test_2
   '0xa4c138a187561bf9':
-    friendly_name: lobby_motion
+    friendly_name: lobby_old_motion
   '0xa4c138c211b1d9ea':
     friendly_name: mirror_light
   '0xa4c138157bb22c3e':
@@ -65,5 +65,7 @@ devices:
   '0xa4c1387071e38067':
     friendly_name: btn_toilet
   '0xa4c13811623bb6ad':
-    friendly_name: '0xa4c13811623bb6ad'
+    friendly_name: rozetka
+  '0xa4c1382f8eac9d69':
+    friendly_name: lobby_motion_2
 version: 4
