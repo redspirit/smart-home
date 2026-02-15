@@ -2,7 +2,7 @@ const { onOff } = require('../modules/utils');
 const Device = require('../modules/Device');
 const Timer = require('../modules/Timer');
 
-const motion = new Device('motion_toilet');
+const motion = new Device('motion_toilet2');
 const light = new Device('switch_toilet');
 const btn = new Device('btn_toilet');
 
